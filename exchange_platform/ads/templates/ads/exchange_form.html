@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md mt-10">
+  <h1 class="text-3xl font-bold text-gray-800 mb-4">Предложить обмен на "{{ ad.title }}"</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-4">
+      <label for="id_ad_sender" class="block text-gray-700 font-semibold">Выберите ваше объявление для обмена:</label>
+      <select name="ad_sender" id="id_ad_sender" class="mt-1 block w-full">
+        {% for ad in my_ads %}
+          <option value="{{ ad.id }}" {% if ad.id == form.ad_sender.value %}selected{% endif %}>
+            {{ ad.title }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label for="id_comment" class="block text-gray-700 font-semibold">Комментарий:</label>
+      <textarea name="comment" id="id_comment" rows="4" class="mt-1 block w-full">{{ form.comment.value }}</textarea>
+    </div>
+
+    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Предложить обмен</button>
+  </form>
+
+  <div class="mt-6">
+    <a href="{% url 'ad_detail' ad.id %}" class="text-blue-600">Назад к объявлению</a>
+  </div>
+</div>
+{% endblock %}
