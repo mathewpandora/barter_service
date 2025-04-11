@@ -21,6 +21,7 @@
               {{ field.label }}
               {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
             </label>
+
             <div class="mt-1 relative">
               {% if field.name == 'image' %}
                 <div class="flex items-center">
@@ -34,9 +35,15 @@
                     {{ field }}
                   </label>
                   <span class="ml-3 text-sm text-gray-500" id="file_name">
-                    {% if ad.image_url %}{{ ad.image_url|cut:"uploads/" }}{% else %}Файл не выбран{% endif %}
+                    {% if ad and ad.image %}{{ ad.image.name|cut:"uploads/" }}{% else %}Файл не выбран{% endif %}
                   </span>
                 </div>
+
+                {% if ad and ad.image %}
+                <div class="mt-4">
+                  <img src="{{ ad.image.url }}" alt="Текущее изображение" class="w-48 h-auto rounded border">
+                </div>
+                {% endif %}
               {% else %}
                 {{ field }}
               {% endif %}

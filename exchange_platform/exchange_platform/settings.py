@@ -132,5 +132,8 @@ LOGIN_REDIRECT_URL = '/ads/list/'
 
 LOGIN_URL = '/account/login/'
 
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = BASE_DIR / 'uploads'
+
 
 

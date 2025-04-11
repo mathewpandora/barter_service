@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.core.paginator import Paginator
-from django.shortcuts import redirect
 from .forms import AdForm
 from .models import Ad, ExchangeProposal
 from .forms import ExchangeProposalForm
@@ -10,40 +9,31 @@ from .forms import ExchangeProposalForm
 
 @login_required
 def create_ad(request):
-    """
-
-    """
     if request.method == 'POST':
-        form = AdForm(request.POST)
+        form = AdForm(request.POST, request.FILES)  # Добавлен request.FILES
         if form.is_valid():
             ad = form.save(commit=False)
             ad.user = request.user
             ad.save()
-            # Редирект на страницу деталей нового объявления (предполагается, что такой URL настроен)
-            return redirect('http://127.0.0.1:8000/ads/list/')  # ← редирект на список
+            return redirect('http://127.0.0.1:8000/ads/list/')
     else:
         form = AdForm()
     return render(request, 'ads/ad_form.html', {'form': form})
 
-
 @login_required
 def edit_ad(request, ad_id):
-    """
-
-    """
     ad = get_object_or_404(Ad, id=ad_id)
     if ad.user != request.user:
         return HttpResponseForbidden("Вы не являетесь автором данного объявления.")
 
     if request.method == 'POST':
-        form = AdForm(request.POST, instance=ad)
+        form = AdForm(request.POST, request.FILES, instance=ad)  # Добавлен request.FILES
         if form.is_valid():
             form.save()
             return redirect('ad_detail', ad_id=ad.id)
     else:
         form = AdForm(instance=ad)
     return render(request, 'ads/ad_form.html', {'form': form, 'ad': ad})
-
 
 @login_required
 def delete_ad(request, ad_id):

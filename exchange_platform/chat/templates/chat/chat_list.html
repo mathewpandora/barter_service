@@ -7,11 +7,10 @@
   <ul class="divide-y divide-gray-200 bg-white rounded-lg shadow-md">
     {% for item in chat_data %}
       <li class="p-4 hover:bg-blue-50 transition">
-        <!-- Здесь вместо proposal.id используем item.chat.proposal.id -->
         <a href="{% url 'chat_view' item.chat.proposal.id %}" class="flex justify-between items-center">
           <div>
             <p class="text-lg font-medium text-gray-900">
-              Предложение #{{ item.chat.proposal.id }}
+              {{ item.chat.proposal.ad_sender.title }} → {{ item.chat.proposal.ad_receiver.title }}
             </p>
             {% if item.last_message %}
               <p class="text-sm text-gray-600">
