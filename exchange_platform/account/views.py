@@ -5,7 +5,6 @@ from django.contrib.auth import login
 from django import forms
 
 
-# Форма регистрации
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label="Пароль")
     password2 = forms.CharField(widget=forms.PasswordInput, label="Повторите пароль")
@@ -27,9 +26,9 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])  # хешируем пароль
+            user.set_password(form.cleaned_data['password'])
             user.save()
-            login(request, user)  # автоматически логиним пользователя
+            login(request, user)
             return redirect('profile')
     else:
         form = RegisterForm()

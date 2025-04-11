@@ -1,94 +1,126 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-4">Мои бартеры</h1>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-4">Мои бартеры</h1>
 
-    <!-- Вкладки -->
-    <div class="mb-6">
-      <div class="flex border-b">
-        <button id="tab-1" class="py-2 px-4 text-xl font-semibold focus:outline-none" onclick="openTab(1)">Ожидающие</button>
-        <button id="tab-2" class="py-2 px-4 text-xl font-semibold focus:outline-none" onclick="openTab(2)">Принятые</button>
-        <button id="tab-3" class="py-2 px-4 text-xl font-semibold focus:outline-none" onclick="openTab(3)">Отклоненные</button>
-      </div>
-    </div>
-
-    <!-- Контент вкладок -->
-    <div id="content-1" class="tab-content">
-      <h2 class="text-2xl font-semibold mb-4">Ожидающие</h2>
-      {% if pending_proposals %}
-        <ul>
-          {% for proposal in pending_proposals %}
-            <li class="py-2">
-              <div class="flex justify-between">
-                <span>{{ proposal.ad_sender.title }} ↔ {{ proposal.ad_receiver.title }}</span>
-                <span class="text-gray-500">Создано: {{ proposal.created_at }}</span>
-              </div>
-              <p class="text-gray-700">{{ proposal.comment }}</p>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>Нет ожидающих предложений.</p>
-      {% endif %}
-    </div>
-
-    <div id="content-2" class="tab-content hidden">
-      <h2 class="text-2xl font-semibold mb-4">Принятые</h2>
-      {% if accepted_proposals %}
-        <ul>
-          {% for proposal in accepted_proposals %}
-            <li class="py-2">
-              <div class="flex justify-between">
-                <span>{{ proposal.ad_sender.title }} ↔ {{ proposal.ad_receiver.title }}</span>
-                <span class="text-gray-500">Создано: {{ proposal.created_at }}</span>
-              </div>
-              <p class="text-gray-700">{{ proposal.comment }}</p>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>Нет принятых предложений.</p>
-      {% endif %}
-    </div>
-
-    <div id="content-3" class="tab-content hidden">
-      <h2 class="text-2xl font-semibold mb-4">Отклоненные</h2>
-      {% if declined_proposals %}
-        <ul>
-          {% for proposal in declined_proposals %}
-            <li class="py-2">
-              <div class="flex justify-between">
-                <span>{{ proposal.ad_sender.title }} ↔ {{ proposal.ad_receiver.title }}</span>
-                <span class="text-gray-500">Создано: {{ proposal.created_at }}</span>
-              </div>
-              <p class="text-gray-700">{{ proposal.comment }}</p>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>Нет отклоненных предложений.</p>
-      {% endif %}
+  <!-- Вкладки -->
+  <div class="mb-6">
+    <div class="flex border-b">
+      <button id="tab-1" class="py-2 px-4 text-xl font-semibold focus:outline-none" onclick="openTab(1)">Ожидающие</button>
+      <button id="tab-2" class="py-2 px-4 text-xl font-semibold focus:outline-none" onclick="openTab(2)">Принятые</button>
+      <button id="tab-3" class="py-2 px-4 text-xl font-semibold focus:outline-none" onclick="openTab(3)">Отклоненные</button>
     </div>
   </div>
 
-  <script>
-    // Функция для переключения вкладок
-    function openTab(tabNumber) {
-      // Скрыть все вкладки
-      const contents = document.querySelectorAll('.tab-content');
-      contents.forEach(content => content.classList.add('hidden'));
+  <!-- Контент вкладок -->
+  <div id="content-1" class="tab-content">
+    <h2 class="text-2xl font-semibold mb-4">Ожидающие</h2>
+    {% if pending_proposals %}
+      <ul>
+        {% for proposal in pending_proposals %}
+          <li class="py-4 px-6 bg-yellow-100 rounded-lg mb-4">
+            <div class="flex justify-between items-center">
+              <span class="text-xl font-semibold">{{ proposal.ad_sender.title }} ↔ {{ proposal.ad_receiver.title }}</span>
+              <span class="text-gray-500 text-sm">Создано: {{ proposal.created_at }}</span>
+            </div>
+            <p class="text-gray-700 mt-2">{{ proposal.comment }}</p>
 
-      // Убрать активность у всех кнопок
-      const tabs = document.querySelectorAll('button');
-      tabs.forEach(tab => tab.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600'));
+            {% if proposal.ad_receiver.user == request.user %}
+              <div class="mt-4 flex space-x-4">
+                <form method="post" action="{% url 'accept_exchange' proposal.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Принять</button>
+                </form>
+                <form method="post" action="{% url 'decline_exchange' proposal.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Отклонить</button>
+                </form>
+                <!-- Кнопка чата -->
+                <a href="{% url 'chat_view' proposal.id %}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 10-8 0v2m4-4h-4m5-7l-2-2m0 0l2-2m-2 2h-4a6 6 0 10-6 6v6a1 1 0 001 1h2a1 1 0 001-1v-6a2 2 0 112 0v6a1 1 0 001 1h2a1 1 0 001-1v-6a6 6 0 00-6-6h-4a6 6 0 106 6h4a6 6 0 106 6v6a1 1 0 001 1h2a1 1 0 001-1v-6a6 6 0 00-6-6h-4a6 6 0 10-6 6h4a6 6 0 106 6v6a1 1 0 001 1h2a1 1 0 001-1v-6a6 6 0 00-6-6h-4a6 6 0 106 6h4z" />
+                  </svg>
+                  Чат
+                </a>
+              </div>
+            {% else %}
+              <p class="mt-2 text-gray-600">Ожидайте подтверждения пользователя.</p>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Нет ожидающих предложений.</p>
+    {% endif %}
+  </div>
 
-      // Показать активную вкладку
-      document.getElementById('content-' + tabNumber).classList.remove('hidden');
-      document.getElementById('tab-' + tabNumber).classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
-    }
+  <div id="content-2" class="tab-content hidden">
+    <h2 class="text-2xl font-semibold mb-4">Принятые</h2>
+    {% if accepted_proposals %}
+      <ul>
+        {% for proposal in accepted_proposals %}
+          <li class="py-4 px-6 bg-green-100 rounded-lg mb-4">
+            <div class="flex justify-between items-center">
+              <span class="text-xl font-semibold">{{ proposal.ad_sender.title }} ↔ {{ proposal.ad_receiver.title }}</span>
+              <span class="text-gray-500 text-sm">Создано: {{ proposal.created_at }}</span>
+            </div>
+            <p class="text-gray-700 mt-2">{{ proposal.comment }}</p>
+            <!-- Кнопка чата -->
+            <a href="{% url 'chat_view' proposal.id %}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 10-8 0v2m4-4h-4m5-7l-2-2m0 0l2-2m-2 2h-4a6 6 0 10-6 6v6a1 1 0 001 1h2a1 1 0 001-1v-6a2 2 0 112 0v6a1 1 0 001 1h2a1 1 0 001-1v-6a6 6 0 00-6-6h-4a6 6 0 106 6h4a6 6 0 106 6v6a1 1 0 001 1h2a1 1 0 001-1v-6a6 6 0 00-6-6h-4a6 6 0 106 6h4z" />
+              </svg>
+              Чат
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Нет принятых предложений.</p>
+    {% endif %}
+  </div>
 
-    // Открыть первую вкладку по умолчанию
-    openTab(1);
-  </script>
+  <div id="content-3" class="tab-content hidden">
+    <h2 class="text-2xl font-semibold mb-4">Отклоненные</h2>
+    {% if declined_proposals %}
+      <ul>
+        {% for proposal in declined_proposals %}
+          <li class="py-4 px-6 bg-red-100 rounded-lg mb-4">
+            <div class="flex justify-between items-center">
+              <span class="text-xl font-semibold">{{ proposal.ad_sender.title }} ↔ {{ proposal.ad_receiver.title }}</span>
+              <span class="text-gray-500 text-sm">Создано: {{ proposal.created_at }}</span>
+            </div>
+            <p class="text-gray-700 mt-2">{{ proposal.comment }}</p>
+            <!-- Кнопка чата -->
+            <a href="{% url 'chat_view' proposal.id %}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 10-8 0v2m4-4h-4m5-7l-2-2m0 0l2-2m-2 2h-4a6 6 0 10-6 6v6a1 1 0 001 1h2a1 1 0 001-1v-6a2 2 0 112 0v6a1 1 0 001 1h2a1 1 0 001-1v-6a6 6 0 00-6-6h-4a6 6 0 106 6h4a6 6 0 106 6v6a1 1 0 001 1h2a1 1 0 001-1v-6a6 6 0 00-6-6h-4a6 6 0 106 6h4z" />
+              </svg>
+              Чат
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Нет отклоненных предложений.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+
+  function openTab(tabNumber) {
+
+    const contents = document.querySelectorAll('.tab-content');
+    contents.forEach(content => content.classList.add('hidden'));
+
+    const tabs = document.querySelectorAll('button');
+    tabs.forEach(tab => tab.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600'));
+
+    document.getElementById('content-' + tabNumber).classList.remove('hidden');
+    document.getElementById('tab-' + tabNumber).classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+  }
+  openTab(1);
+</script>
 {% endblock %}

@@ -21,29 +21,22 @@ class AdForm(forms.ModelForm):
         }
 
 
-from django import forms
-from .models import ExchangeProposal, Ad
-
-
 class ExchangeProposalForm(forms.ModelForm):
     class Meta:
         model = ExchangeProposal
-        fields = ['ad_sender', 'comment']  # Только отправитель и комментарий
+        fields = ['ad_sender', 'comment']
 
-    # Переопределим поле ad_sender, чтобы только объявления текущего пользователя были доступны
     ad_sender = forms.ModelChoiceField(
-        queryset=Ad.objects.none(),  # Изначально пустой, будет обновляться в __init__
+        queryset=Ad.objects.none(),
         required=True,
         label="Выберите объявление для обмена"
     )
 
     def __init__(self, *args, **kwargs):
-        # Передаем пользователя через аргументы
-        user = kwargs.pop('user', None)  # Получаем пользователя, переданного в аргументах
+        user = kwargs.pop('user', None)
 
         super().__init__(*args, **kwargs)
 
-        # Ограничиваем выбор только объявлениями текущего пользователя
         if user:
             self.fields['ad_sender'].queryset = Ad.objects.filter(user=user)
 

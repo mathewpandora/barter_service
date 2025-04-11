@@ -14,6 +14,10 @@ class Ad(models.Model):
     category = models.CharField(max_length=100)
     condition = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_archived = models.BooleanField(default=False)  # Новое поле
+
+    def __str__(self):
+        return self.title
 
 
 class ExchangeProposal(models.Model):
@@ -44,4 +48,8 @@ class ExchangeProposal(models.Model):
         default=STATUS_PENDING
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Proposal from {self.ad_sender.title} to {self.ad_receiver.title}"
+
 

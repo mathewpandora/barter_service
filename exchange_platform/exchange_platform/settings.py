@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'ads',
     'account',
+    'chat',
     'rest_framework',
 ]
 
