@@ -3,7 +3,10 @@
 
 {% block content %}
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md mt-10">
-  <h1 class="text-3xl font-bold text-gray-800 mb-6">Мои объявления</h1>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Мои объявления</h1>
+    <a href="{% url 'create_ad' %}" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Создать объявление</a>
+  </div>
 
   {% if ads %}
     <ul class="space-y-4">

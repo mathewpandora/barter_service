@@ -4,13 +4,13 @@
 {% block content %}
 <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
   <div class="w-full max-w-md">
-    <!-- Анимированная карточка -->
+
     <div class="bg-white rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
-      <!-- Декоративная верхняя полоса -->
+
       <div class="h-2 bg-gradient-to-r from-purple-500 to-indigo-600"></div>
 
       <div class="p-8">
-        <!-- Заголовок с иконкой -->
+
         <div class="flex flex-col items-center mb-8">
           <div class="bg-indigo-100 p-3 rounded-full mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -21,13 +21,13 @@
           <p class="text-gray-500 mt-2">Заполните форму для регистрации</p>
         </div>
 
-        <!-- Форма -->
+
         <form method="post" class="space-y-6">
           {% csrf_token %}
 
-          <!-- Поля формы с кастомным оформлением -->
+
           <div class="space-y-4">
-            <!-- Имя пользователя -->
+
             <div>
               <label for="id_username" class="block text-sm font-medium text-gray-700 mb-1">Имя пользователя</label>
               <div class="relative">
@@ -43,7 +43,6 @@
               {% endif %}
             </div>
 
-            <!-- Email -->
             <div>
               <label for="id_email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
               <div class="relative">
@@ -59,7 +58,6 @@
               {% endif %}
             </div>
 
-            <!-- Пароль -->
             <div>
               <label for="id_password" class="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
               <div class="relative">
@@ -75,7 +73,6 @@
               {% endif %}
             </div>
 
-            <!-- Подтверждение пароля -->
             <div>
               <label for="id_password2" class="block text-sm font-medium text-gray-700 mb-1">Повторите пароль</label>
               <div class="relative">
@@ -92,7 +89,6 @@
             </div>
           </div>
 
-          <!-- Кнопка регистрации -->
           <button type="submit" class="w-full flex justify-center items-center py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
@@ -101,7 +97,6 @@
           </button>
         </form>
 
-        <!-- Ссылка на вход -->
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Уже есть аккаунт?
@@ -114,14 +109,12 @@
 </div>
 
 <style>
-  /* Стилизация полей ввода */
   input[type="text"],
   input[type="email"],
   input[type="password"] {
     @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200;
   }
 
-  /* Анимация ошибок */
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
     20%, 60% { transform: translateX(-5px); }
@@ -134,7 +127,6 @@
 </style>
 
 <script>
-  // Добавляем анимацию при ошибках
   document.addEventListener('DOMContentLoaded', function() {
     {% if form.errors %}
       const errorFields = document.querySelectorAll('.errorlist');

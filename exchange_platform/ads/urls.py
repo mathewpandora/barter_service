@@ -1,3 +1,5 @@
+from rest_framework.authtoken.views import obtain_auth_token
+from .views import UserRegistrationView, AdListCreateView, AdDetailView
 from django.urls import path
 from . import views
 
@@ -13,4 +15,9 @@ urlpatterns = [
     path('propose-exchange/<int:ad_id>/', views.propose_exchange, name='propose_exchange'),
     path('accept/<int:proposal_id>/', views.accept_exchange, name='accept_exchange'),
     path('decline/<int:proposal_id>/', views.decline_exchange, name='decline_exchange'),
+    path('login/', obtain_auth_token, name='api_token_auth'),
+    path('register/', UserRegistrationView.as_view(), name='api_register'),
+    path('ads/', AdListCreateView.as_view(), name='ad-list-create'),
+    path('ads/<int:ad_id>/', AdDetailView.as_view(), name='ad-detail'),
+
 ]

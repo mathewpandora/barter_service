@@ -17,7 +17,6 @@ def chat_view(request, proposal_id):
         proposal.ad_receiver.user
     )
 
-    # Обработка отправки сообщений
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():

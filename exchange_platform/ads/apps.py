@@ -6,4 +6,4 @@ class AdsConfig(AppConfig):
     name = "ads"
 
     def ready(self):
-        import ads.services.signal  # Путь к файлу signals
+        import ads.services.signal

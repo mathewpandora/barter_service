@@ -34,77 +34,55 @@
   <header class="bg-gradient-to-r from-blue-600 to-indigo-700 shadow-lg">
     <div class="container mx-auto px-4 py-4">
       <div class="flex items-center justify-between">
-        <!-- Логотип и название -->
         <div class="flex items-center space-x-3">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
           </svg>
-          <a href="{% url 'ad_list' %}" class="text-2xl font-bold text-white">
-  Barter.ru
-</a>
+          <a href="{% url 'ad_list' %}" class="text-2xl font-bold text-white">Barter.ru</a>
         </div>
 
-        <!-- Навигация -->
+        {% if user.is_authenticated %}
         <nav class="hidden md:flex items-center space-x-8">
-  <a href="{% url 'ad_list' %}" class="text-white font-medium nav-link flex items-center space-x-2">
-    <!-- Иконка для "Объявления" -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h18M3 7h18M3 9h18M3 11h18M3 13h18M3 15h18M3 17h18" />
-    </svg>
-    <span>Все барты</span>
-  </a>
+          <a href="{% url 'ad_list' %}" class="text-white font-medium nav-link flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h18M3 7h18M3 9h18M3 11h18M3 13h18M3 15h18M3 17h18" />
+            </svg>
+            <span>Все барты</span>
+          </a>
+          <a href="{% url 'my_ads' %}" class="text-white font-medium nav-link flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+            <span>Мои барты</span>
+          </a>
+          <a href="{% url 'my_barters' %}" class="text-white font-medium nav-link flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Обмены</span>
+          </a>
+          <a href="{% url 'info_page' %}" class="text-white font-medium nav-link flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Как это работает?</span>
+          </a>
+          <a href="#" class="text-white font-medium nav-link flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 6h20M2 18h20" />
+            </svg>
+            <span>Контакты</span>
+          </a>
+        </nav>
+        {% endif %}
 
-  <a href="{% url 'my_ads' %}" class="text-white font-medium nav-link flex items-center space-x-2">
-    <!-- Иконка для "Мои объявления" -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
-    <span>Мои барты</span>
-  </a>
-
-  <a href="{% url 'my_barters' %}" class="text-white font-medium nav-link flex items-center space-x-2">
-    <!-- Иконка для "Мои бартеры" -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-    </svg>
-    <span>Обмены</span>
-  </a>
-
-  <a href="#" class="text-white font-medium nav-link flex items-center space-x-2">
-    <!-- Иконка для "Как это работает?" -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-    </svg>
-    <span>Как это работает?</span>
-  </a>
-
-  <a href="#" class="text-white font-medium nav-link flex items-center space-x-2">
-    <!-- Иконка для "Контакты" -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 6h20M2 18h20" />
-    </svg>
-    <span>Контакты</span>
-  </a>
-</nav>
-
-        <a href="{% url 'chat_list' %}" class="text-white font-medium nav-link flex items-center space-x-2">
-  <!-- Иконка "конверт" -->
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-  </svg>
-  <span>Чаты</span>
-</a>
-
-        <!-- Кнопки авторизации -->
         <div class="flex items-center space-x-4">
           {% if user.is_authenticated %}
             <div class="hidden md:flex items-center space-x-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-              <a href="{% url 'profile' %}" class="text-white font-medium">
-                <span class="text-white font-medium">{{ user.username }}</span>
-              </a>
+              <a href="{% url 'profile' %}" class="text-white font-medium">{{ user.username }}</a>
             </div>
             <form action="{% url 'logout' %}" method="post">
               {% csrf_token %}
@@ -112,9 +90,12 @@
                 Выход
               </button>
             </form>
+          {% else %}
+            <a href="{% url 'login' %}" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition duration-200 shadow-sm">
+              Войти / Зарегистрироваться
+            </a>
           {% endif %}
         </div>
-
 
         <button class="md:hidden text-white focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -127,14 +108,15 @@
 
   <div class="md:hidden hidden bg-white shadow-md" id="mobileMenu">
     <div class="container mx-auto px-4 py-2">
-      <a href="{% url 'ad_list' %}" class="block py-2 text-gray-700 hover:text-blue-600">Барты</a>
-      <a href="{% url 'my_ads' %}" class="block py-2 text-gray-700 hover:text-blue-600 flex items-center space-x-2">Мои барты</a>
-      <a href="#" class="block py-2 text-gray-700 hover:text-blue-600">Как это работает?</a>
-      <a href="#" class="block py-2 text-gray-700 hover:text-blue-600">Контакты</a>
       {% if user.is_authenticated %}
-        <a href="/account/profile" class="block py-2 text-gray-700 hover:text-blue-600">Мой профиль</a>
+        <a href="{% url 'ad_list' %}" class="block py-2 text-gray-700 hover:text-blue-600">Барты</a>
+        <a href="{% url 'my_ads' %}" class="block py-2 text-gray-700 hover:text-blue-600">Мои барты</a>
+        <a href="{% url 'my_barters' %}" class="block py-2 text-gray-700 hover:text-blue-600">Обмены</a>
+        <a href="{% url 'info_page' %}" class="block py-2 text-gray-700 hover:text-blue-600">Как это работает?</a>
+        <a href="#" class="block py-2 text-gray-700 hover:text-blue-600">Контакты</a>
+        <a href="{% url 'profile' %}" class="block py-2 text-gray-700 hover:text-blue-600">Профиль</a>
       {% else %}
-        <a href="#" class="block py-2 text-gray-700 hover:text-blue-600">Регистрация</a>
+        <a href="{% url 'login' %}" class="block py-2 text-blue-600 font-semibold hover:text-blue-800">Войти / Зарегистрироваться</a>
       {% endif %}
     </div>
   </div>
@@ -144,7 +126,6 @@
   </main>
 
   <script>
-    // Мобильное меню
     const mobileMenuButton = document.querySelector('button[class*="md:hidden"]');
     const mobileMenu = document.getElementById('mobileMenu');
 

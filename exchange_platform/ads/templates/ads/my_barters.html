@@ -4,7 +4,6 @@
 <div class="container mx-auto px-4 py-8">
   <h1 class="text-3xl font-bold mb-4">Мои бартеры</h1>
 
-  <!-- Вкладки -->
   <div class="mb-6">
     <div class="flex border-b">
       <button id="tab-1" class="py-2 px-4 text-xl font-semibold focus:outline-none" onclick="openTab(1)">Ожидающие</button>
@@ -13,7 +12,6 @@
     </div>
   </div>
 
-  <!-- Ожидающие -->
   <div id="content-1" class="tab-content">
     <h2 class="text-2xl font-semibold mb-4">Ожидающие</h2>
     {% if pending_proposals %}
@@ -41,7 +39,6 @@
               <p class="mt-2 text-gray-600">Ожидайте подтверждения пользователя.</p>
             {% endif %}
 
-            <!-- Чат не доступен -->
             <p class="mt-2 text-gray-500 italic">Чат станет доступен после принятия предложения.</p>
           </li>
         {% endfor %}
@@ -51,7 +48,6 @@
     {% endif %}
   </div>
 
-  <!-- Принятые -->
   <div id="content-2" class="tab-content hidden">
     <h2 class="text-2xl font-semibold mb-4">Принятые</h2>
     {% if accepted_proposals %}
@@ -64,7 +60,6 @@
             </div>
             <p class="text-gray-700 mt-2">{{ proposal.comment }}</p>
 
-            <!-- Кнопка чата доступна -->
             <a href="{% url 'chat_view' proposal.id %}" class="px-4 py-2 mt-3 inline-flex items-center bg-blue-600 text-white rounded hover:bg-blue-700">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 10-8 0v2m4-4h-4m5-7l-2-2m0 0l2-2m-2 2h-4a6 6 0 10-6 6v6a1 1 0 001 1h2a1 1 0 001-1v-6a2 2 0 112 0v6a1 1 0 001 1h2a1 1 0 001-1v-6a6 6 0 00-6-6h-4a6 6 0 106 6h4a6 6 0 106 6v6a1 1 0 001 1h2a1 1 0 001-1v-6a6 6 0 00-6-6h-4a6 6 0 106 6h4z" />
